@@ -39,28 +39,35 @@ const fulfillOrder = async (session: any) => {
     });
 };
 
-export default async (req : NextApiRequest, res : NextApiResponse) => {
-    const { method } = req;
+export default async (req, res) => {
+    if (req.method === "POST") {
+        const buf = await buffer(req);
+        const sig = req.headers["stripe-signature"];
 
-    if (method !== 'POST') {
-        return res.status(405).json({ message: 'Method not allowed' });
-    }
+        let event;
 
-    try {
-        const requestBuffer = await buffer(req);
-        const payload = requestBuffer.toString();
-        const sig = req.headers['stripe-signature'];
-        const event = stripe.webhooks.constructEvent(requestBuffer, sig, endpointSecret);
-
-        if (event.type === 'checkout.session.completed') {
-            const session = event.data.object;
-
-            await fulfillOrder(session);
-            return res.status(200).send({ message: 'Order fulfilled successfully' });
+        try {
+            event = stripe.webhooks.constructEvent(buf.toString(), sig, endpointSecret);
+        } catch (err) {
+            console.error(err);
+            res.status(400).send(`Webhook Error: ${err.message}`);
+            return;
         }
-    } catch (err : any) {
-        console.error('Error processing webhook:', err);
-        return res.status(400).send({ message: 'Webhook error', error: err.message });
+
+        // Handle the event
+        switch (event.type) {
+            case "payment_intent.succeeded":
+                const session = event.data.object;
+
+                await fulfillOrder(session);
+                return res.status(200).send({ message: 'Order fulfilled successfully' });
+                break;
+            // Handle other event types
+            default:
+                console.log(`Unhandled event type: ${event.type}`);
+        }
+
+        res.status(200).json({ received: true });
     }
 };
 export const config = {
