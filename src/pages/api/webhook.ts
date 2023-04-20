@@ -50,7 +50,7 @@ export default async (req : NextApiRequest, res : NextApiResponse) => {
         const requestBuffer = await buffer(req);
         const payload = requestBuffer.toString();
         const sig = req.headers['stripe-signature'];
-        const event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+        const event = stripe.webhooks.constructEvent(requestBuffer, sig, endpointSecret);
 
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object;
