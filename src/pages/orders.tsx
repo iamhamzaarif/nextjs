@@ -22,7 +22,7 @@ const Orders = ({ orders }: Props) => {
           Your Orders
         </h1>
         {session ? (
-          <h2>{orders.length} Orders</h2>
+          <h2>{orders?.length} Orders</h2>
         ) : (
           <h2>Please sign in to see your orders</h2>
         )}
