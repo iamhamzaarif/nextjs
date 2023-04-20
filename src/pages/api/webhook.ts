@@ -12,6 +12,7 @@ const serviceAccount = {
   clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
 } as ServiceAccount;
 
+console.log("application App", !admin?.apps?.length)
 const app = !admin?.apps?.length
   ? admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
@@ -39,35 +40,30 @@ const fulfillOrder = async (session: any) => {
     });
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === "POST") {
-    const requestBuffer = await buffer(req);
-    const payload = requestBuffer.toString();
-    const sig = req.headers["stripe-signature"];
+export default async (req : NextApiRequest, res : NextApiResponse) => {
+    const { method } = req;
 
-    let event;
+    if (method !== 'POST') {
+        return res.status(405).json({ message: 'Method not allowed' });
+    }
 
-    // Verify that the Event posted came from Stripe
     try {
-      event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
-    } catch (err: any) {
-      console.log("ERROR", err.message);
-      return res.status(400).send(`Webhook error: ${err.message}`);
-    }
-    // Handle the checkout.session.completed event
-    if (event.type === "checkout.session.completed") {
-      const session = event.data.object;
+        const requestBuffer = await buffer(req);
+        const payload = requestBuffer.toString();
+        const sig = req.headers['stripe-signature'];
+        const event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
 
-      // Fullfil order
-      return fulfillOrder(session)
-        .then(() => res.status(200))
-        .catch((err) => {
-          res.status(400).send(`Webhook Error: ${err.message}`);
-        });
+        if (event.type === 'checkout.session.completed') {
+            const session = event.data.object;
+
+            await fulfillOrder(session);
+            return res.status(200).send({ message: 'Order fulfilled successfully' });
+        }
+    } catch (err) {
+        console.error('Error processing webhook:', err);
+        return res.status(400).send({ message: 'Webhook error', error: err.message });
     }
-  }
 };
-
 export const config = {
   api: {
     bodyParser: false,
