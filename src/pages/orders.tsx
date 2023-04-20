@@ -45,7 +45,7 @@ export const getServerSideProps = async (
   const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
   // Get user logged in credentials
-  const session: ISession | null = await getSession(context);
+  const session: any | ISession | null = await getSession(context);
   if (!session) {
     return {
       props: {},
