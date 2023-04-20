@@ -13,11 +13,10 @@ const serviceAccount = {
 } as ServiceAccount;
 
 console.log("application App", !admin?.apps?.length)
-const app = !admin?.apps?.length
-  ? admin.initializeApp({
+const app = admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
     })
-  : admin.app();
+
 
 // Establish connection to Stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
