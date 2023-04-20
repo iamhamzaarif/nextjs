@@ -39,7 +39,7 @@ const fulfillOrder = async (session: any) => {
     });
 };
 
-export default async (req, res) => {
+export default async (req: NextApiRequest, res : NextApiResponse) => {
     if (req.method === "POST") {
         const buf = await buffer(req);
         const sig = req.headers["stripe-signature"];
@@ -48,7 +48,7 @@ export default async (req, res) => {
 
         try {
             event = stripe.webhooks.constructEvent(buf.toString(), sig, endpointSecret);
-        } catch (err) {
+        } catch (err : any) {
             console.error(err);
             res.status(400).send(`Webhook Error: ${err.message}`);
             return;
