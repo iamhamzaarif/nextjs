@@ -50,7 +50,7 @@ const Header = (props: Props) => {
 
             <ShoppingCartIcon className="h-10" />
             <p className="hidden md:inline font-extrabold text-sm mt-2">
-              Basket
+              Cart
             </p>
           </div>
         </div>

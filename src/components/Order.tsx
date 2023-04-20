@@ -21,9 +21,9 @@ const Order = ({ order }: Props) => {
         <div>
           <p className="text-xs font-bold">TOTAL</p>
           <p>
-            <Currency quantity={order.amount} currency="PKR" /> - One-Day
+            <Currency quantity={order.amount} currency="USD" /> - One-Day
             Delivery{" "}
-            <Currency quantity={order.amount_shipping} currency="PKR" />
+            <Currency quantity={order.amount_shipping} currency="USD" />
           </p>
         </div>
 

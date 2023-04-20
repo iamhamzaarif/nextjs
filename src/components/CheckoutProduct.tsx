@@ -53,7 +53,7 @@ const CheckoutProduct = ({ product }: Props) => {
             ))}
         </div>
         <p className="text-xs my-2 line-clamp-3">{description}</p>
-        <Currency quantity={price} currency="PKR" />
+        <Currency quantity={price} currency="USD" />
       </div>
       {/* Right */}
       <div className="flex flex-col space-y-2 my-auto justify-self-end">

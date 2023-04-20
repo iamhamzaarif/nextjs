@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const transformedItems = items.map((item: IProduct) => ({
     price_data: {
-      currency: "pkr",
+      currency: "usd",
       unit_amount: item.price * 100,
       product_data: {
         name: item.title,
