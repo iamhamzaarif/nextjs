@@ -12,7 +12,7 @@ const serviceAccount = {
   clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
 } as ServiceAccount;
 
-const app = !admin.apps.length
+const app = !admin?.apps?.length
   ? admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
     })
