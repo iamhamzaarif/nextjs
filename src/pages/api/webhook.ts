@@ -59,7 +59,7 @@ export default async (req : NextApiRequest, res : NextApiResponse) => {
             await fulfillOrder(session);
             return res.status(200).send({ message: 'Order fulfilled successfully' });
         }
-    } catch (err) {
+    } catch (err : any) {
         console.error('Error processing webhook:', err);
         return res.status(400).send({ message: 'Webhook error', error: err.message });
     }
