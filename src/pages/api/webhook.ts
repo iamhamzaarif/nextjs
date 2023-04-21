@@ -79,6 +79,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 await fulfillOrder(paymentIntent);
                 break;
 
+            case "payment_intent.created":
+                res.status(200).json({ received: true });
+                break;
+
+            case "payment_intent.succeeded":
+                res.status(200).json({ received: true });
+                break;
+
+            case "checkout.session.created":
+                res.status(200).json({ received: true });
+                break;
+
             // Handle other event types
             default:
                 console.log(`Unhandled event type: ${event.type}`);
