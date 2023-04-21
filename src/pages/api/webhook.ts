@@ -27,7 +27,8 @@ const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
 const fulfillOrder = async (paymentIntent: Stripe.PaymentIntent | any) => {
     const { metadata, id, amount_total, total_details } = paymentIntent;
     const { email, images } = metadata;
-
+    console.log("paymentIntent", paymentIntent)
+    console.log("metaData", metadata)
     const orderData = {
         amount: amount_total / 100,
         images: JSON.parse(images),
@@ -77,18 +78,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             case "checkout.session.completed":
                 const paymentIntent = event.data.object as Stripe.PaymentIntent;
                 await fulfillOrder(paymentIntent);
-                break;
-
-            case "payment_intent.created":
-                res.status(200).json({ received: true });
-                break;
-
-            case "payment_intent.succeeded":
-                res.status(200).json({ received: true });
-                break;
-
-            case "checkout.session.created":
-                res.status(200).json({ received: true });
                 break;
 
             // Handle other event types
