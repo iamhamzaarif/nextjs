@@ -1,7 +1,7 @@
 import moment from "moment";
 import Image from "next/image";
 import Currency from "react-currency-formatter";
-import { IOrder } from "../../typings";
+import { IOrder } from "@/typings";
 
 type Props = {
   order: IOrder;
@@ -21,13 +21,11 @@ const Order = ({ order }: Props) => {
         <div>
           <p className="text-xs font-bold">TOTAL</p>
           <p>
-            <Currency quantity={order.amount} currency="USD" /> - One-Day
-            Delivery{" "}
-            <Currency quantity={order.amount_shipping} currency="USD" />
+            <Currency quantity={order.amount} currency="USD" />
           </p>
         </div>
 
-        <p className="text-sm whitespace-nowrap sm:text-lg self-end flex-1 text-right text-fast_blue-light">
+        <p className="text-sm whitespace-nowrap sm:text-lg self-end flex-1 text-right text-demo_yellow-light">
           {order.items.length} items
         </p>
 

@@ -8,9 +8,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        fast_blue: {
-          DEFAULT: "#541D9B",
-          light: "#7C2BE8",
+        demo_yellow: {
+          DEFAULT: "#ffcc00",
+          light: "#e0c059",
         },
       },
     },

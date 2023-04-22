@@ -57,8 +57,8 @@ const CheckoutProduct = ({ product }: Props) => {
       </div>
       {/* Right */}
       <div className="flex flex-col space-y-2 my-auto justify-self-end">
-        <button onClick={addItemToBasket} className="button mt-auto">Add to Basket</button>
-        <button onClick={removeItemFromBasket} className="button mt-auto">Remove from Basket</button>
+        <button onClick={addItemToBasket} className="button mt-auto text-black font-semibold">Add to Cart</button>
+        <button onClick={removeItemFromBasket} className="button mt-auto text-black font-semibold">Remove from Cart</button>
       </div>
     </div>
   );

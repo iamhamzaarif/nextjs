@@ -15,7 +15,7 @@ const Home = ({ products }: Props) => {
   return (
     <div >
       <Head>
-        <title>Fast Marketplace</title>
+        <title>Nextjs Demo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* Header */}

@@ -18,7 +18,7 @@ const Orders = ({ orders }: Props) => {
     <div>
       <Header />
       <main className="max-w-screen-l max-auto p-10">
-        <h1 className="text-3xl border-b mb-2 pb-1 border-[fast_blue]">
+        <h1 className="text-3xl border-b mb-2 pb-1 border-[demo_yellow]">
           Your Orders
         </h1>
         {session ? (

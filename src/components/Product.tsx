@@ -54,8 +54,8 @@ const Product: React.FC<Props> = ({ product }: Props) => {
         <div className="mb-5">
           <Currency quantity={price} currency="USD" />
         </div>
-        <button onClick={addItemToBasket} className="mt-auto button">
-          Add to Basket
+        <button onClick={addItemToBasket} className="mt-auto button font-semibold text-black">
+          Add to Cart
         </button>
       </div>
     </>
