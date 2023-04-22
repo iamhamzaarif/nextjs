@@ -2,8 +2,8 @@ import { GetServerSidePropsContext } from "next";
 import { getSession, useSession } from "next-auth/react";
 import Head from "next/head";
 import { IProduct, ISession } from "../../typings";
-import Header from "../components/Header";
 import ProductFeed from "../components/ProductFeed";
+import {Layout} from "../layout";
 
 type Props = {
   products: IProduct[];
@@ -19,11 +19,12 @@ const Home = ({ products }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* Header */}
-      <Header />
+      <Layout>
       <main className="max-w-screen-2xl mx-auto ">
         {/* ProductFeed */}
         <ProductFeed products={products} />
       </main>
+      </Layout>
     </div>
   );
 };

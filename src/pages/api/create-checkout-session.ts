@@ -41,7 +41,7 @@ export default async function checkoutHandler(
       line_items: transformedItems,
       mode: "payment",
       success_url: `${process.env.HOST}/success`,
-      cancel_url: `${process.env.HOST}/checkout`,
+      cancel_url: `${process.env.HOST}/`,
       metadata: {
         email,
         images: JSON.stringify(

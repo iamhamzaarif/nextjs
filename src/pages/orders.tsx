@@ -6,6 +6,7 @@ import db from "../../firebase";
 import { IOrder, ISession } from "../../typings";
 import Header from "../components/Header";
 import Order from "../components/Order";
+import {Layout} from "../layout";
 
 type Props = {
   orders: IOrder[];
@@ -15,25 +16,25 @@ const Orders = ({ orders }: Props) => {
   const { data: session } = useSession();
 
   return (
-    <div>
-      <Header />
-      <main className="max-w-screen-l max-auto p-10">
+<Layout>
+    <main className="max-w-screen-l max-auto p-10">
         <h1 className="text-3xl border-b mb-2 pb-1 border-[demo_yellow]">
-          Your Orders
+            Your Orders
         </h1>
         {session ? (
-          <h2>{orders?.length} Orders</h2>
+            <h2>{orders?.length} Orders</h2>
         ) : (
-          <h2>Please sign in to see your orders</h2>
+            <h2>Please sign in to see your orders</h2>
         )}
 
         <div className="mt-5 space-y-4">
-          {orders?.map((order) => (
-            <Order key={order.id} order={order} />
-          ))}
+            {orders?.map((order) => (
+                <Order key={order.id} order={order} />
+            ))}
         </div>
-      </main>
-    </div>
+    </main>
+</Layout>
+
   );
 };
 
