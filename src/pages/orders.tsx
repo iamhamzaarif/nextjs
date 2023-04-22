@@ -1,12 +1,13 @@
 import { collection, doc, getDocs, orderBy, query } from "firebase/firestore";
 import moment from "moment";
 import { GetServerSidePropsContext } from "next";
-import { getSession, useSession } from "next-auth/react";
+import {getSession, signIn, signOut, useSession} from "next-auth/react";
 import db from "../../firebase";
 import { IOrder, ISession } from "../../typings";
 import Header from "../components/Header";
 import Order from "../components/Order";
 import {Layout} from "../layout";
+import {useRouter} from "next/router";
 
 type Props = {
   orders: IOrder[];
@@ -14,13 +15,21 @@ type Props = {
 
 const Orders = ({ orders }: Props) => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   return (
 <Layout>
     <main className="max-w-screen-l max-auto p-10">
         <h1 className="text-3xl border-b mb-2 pb-1 border-[demo_yellow]">
             Your Orders
+            <div
+                onClick={() => router.push("/shops")}
+                className="link float-right mb-0"
+            >
+                <p className="font-semibold m-auto text-blue-500 underline text-sm">Want to Visit us?</p>
+            </div>
         </h1>
+
         {session ? (
             <h2>{orders?.length} Orders</h2>
         ) : (
@@ -32,6 +41,7 @@ const Orders = ({ orders }: Props) => {
                 <Order key={order.id} order={order} />
             ))}
         </div>
+
     </main>
 </Layout>
 
