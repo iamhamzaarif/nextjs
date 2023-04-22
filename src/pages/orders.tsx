@@ -46,9 +46,13 @@ export const getServerSideProps = async (
   // Get user logged in credentials
   const session: any | ISession | null = await getSession(context);
   if (!session) {
-    return {
-      props: {},
-    };
+      return {
+          redirect: {
+              destination: `${process.env.NEXTAUTH_URL}/api/auth/signin`,
+              permanent: false,
+          },
+          props:{}
+      }
   }
 
   // // Firebase db
