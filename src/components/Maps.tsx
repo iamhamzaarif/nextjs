@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { GoogleMap, MarkerF, useJsApiLoader, MarkerClusterer } from "@react-google-maps/api";
-const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+import {useState} from "react";
+import {GoogleMap, MarkerF, useJsApiLoader, MarkerClusterer} from "@react-google-maps/api";
 
 const containerStyle = {
     width: "90%",
@@ -20,7 +19,7 @@ interface Location {
 
 function Map({locations}: any) {
     const [map, setMap] = useState(null);
-    const { isLoaded }: any = useJsApiLoader({
+    const {isLoaded}: any = useJsApiLoader({
         id: "google-map-script",
         googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
     });
@@ -49,13 +48,13 @@ function Map({locations}: any) {
                     locations.map((location: Location) => (
                         <MarkerF
                             key={location.id}
-                            position={{ lat: location.lat, lng: location.lng }}
+                            position={{lat: location.lat, lng: location.lng}}
                             clusterer={clusterer}
                         />
                     ))
                 }
             </MarkerClusterer>
-            </GoogleMap>
+        </GoogleMap>
     ) : (
         <>Loading...</>
     );

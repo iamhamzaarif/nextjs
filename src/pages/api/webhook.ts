@@ -1,7 +1,7 @@
-import { buffer } from "micro";
-import { NextApiRequest, NextApiResponse } from "next";
+import {buffer} from "micro";
+import {NextApiRequest, NextApiResponse} from "next";
 import * as admin from "firebase-admin";
-import { ServiceAccount } from "firebase-admin";
+import {ServiceAccount} from "firebase-admin";
 import Stripe from "stripe";
 
 // Secure a connection to Firebase from backend
@@ -25,8 +25,8 @@ const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
 
 // Function to fulfill an order
 const fulfillOrder = async (paymentIntent: Stripe.PaymentIntent | any) => {
-    const { metadata, id, amount_total, total_details } = paymentIntent;
-    const { email, images } = metadata;
+    const {metadata, id, amount_total, total_details} = paymentIntent;
+    const {email, images} = metadata;
     console.log("paymentIntent", paymentIntent)
     console.log("metaData", metadata)
     const orderData = {
@@ -60,7 +60,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const requestBuffer = await buffer(req);
     const payload = requestBuffer.toString();
-    const sig : any = req.headers["stripe-signature"];
+    const sig: any = req.headers["stripe-signature"];
 
     let event: Stripe.Event;
 
@@ -85,7 +85,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 console.log(`Unhandled event type: ${event.type}`);
         }
 
-        res.status(200).json({ received: true });
+        res.status(200).json({received: true});
     } catch (err) {
         console.error("Error handling Stripe event", err);
         res.status(500).end("Internal Server Error");
