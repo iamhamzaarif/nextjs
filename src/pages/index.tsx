@@ -14,11 +14,6 @@ const Home = ({products}: Props) => {
 
     return (
         <div>
-            <Head>
-                <title>Nextjs Demo</title>
-                <link rel="icon" href="/favicon.ico"/>
-            </Head>
-            {/* Header */}
             <Layout>
                 <main className="max-w-screen-2xl mx-auto ">
                     {/* ProductFeed */}
