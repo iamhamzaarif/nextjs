@@ -53,7 +53,7 @@ const fulfillOrder = async (paymentIntent: Stripe.PaymentIntent | any) => {
     }
 };
 
-async function webHookHandler(req: NextApiRequest, res: NextApiResponse) {
+export default  async function webHookHandler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "POST") {
         res.setHeader("Allow", "POST");
         return res.status(405).end("Method Not Allowed");
@@ -99,4 +99,3 @@ export const config = {
         externalResolver: true,
     },
 };
-export default authMiddleware(webHookHandler);
