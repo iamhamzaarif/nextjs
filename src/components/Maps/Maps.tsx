@@ -1,15 +1,6 @@
 import {useState} from "react";
-import {GoogleMap, MarkerF, useJsApiLoader, MarkerClusterer} from "@react-google-maps/api";
-
-const containerStyle = {
-    width: "90%",
-    height: "500px",
-};
-
-const center = {
-    lat: 37.7749,
-    lng: -122.4194,
-};
+import {GoogleMap, useJsApiLoader, MarkerClusterer} from "@react-google-maps/api";
+import CustomMarker from "../Maps/CustomMarkers";
 
 interface Location {
     id: string;
@@ -17,8 +8,14 @@ interface Location {
     lng: number;
 }
 
+const containerStyle = {
+    width: "90%",
+    height: "500px",
+};
+
 function Map({locations}: any) {
     const [map, setMap] = useState(null);
+
     const {isLoaded}: any = useJsApiLoader({
         id: "google-map-script",
         googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
@@ -31,24 +28,32 @@ function Map({locations}: any) {
     const onUnmount = () => {
         setMap(null);
     };
+
     const options = {
-        imagePath: `/marker`,
-        gridSize: 50
+        disableDefaultUI: true,
+        scaleControl: true,
+        mapTypeId: "roadmap",
+        labels: true
     };
+
+    const defaultCenter = {lat: -33.851702, lng: 151.216968};
+
     return isLoaded ? (
         <GoogleMap
+            id="circle-example"
             mapContainerStyle={containerStyle}
-            center={center}
+            center={defaultCenter}
             zoom={5}
+            options={options}
             onLoad={onLoad}
             onUnmount={onUnmount}
         >
-            <MarkerClusterer options={options}>
-                {(clusterer) =>
-                    locations.map((location: Location) => (
-                        <MarkerF
-                            key={location.id}
-                            position={{lat: location.lat, lng: location.lng}}
+            <MarkerClusterer>
+                {clusterer =>
+                    locations.map((loc: Location) => (
+                        <CustomMarker
+                            key={loc.id}
+                            position={loc}
                             clusterer={clusterer}
                         />
                     ))
