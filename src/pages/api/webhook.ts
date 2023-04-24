@@ -3,6 +3,7 @@ import {NextApiRequest, NextApiResponse} from "next";
 import * as admin from "firebase-admin";
 import {ServiceAccount} from "firebase-admin";
 import Stripe from "stripe";
+import authMiddleware from '../../middleware/jwtVerification';
 
 // Secure a connection to Firebase from backend
 const serviceAccount = {
@@ -52,7 +53,7 @@ const fulfillOrder = async (paymentIntent: Stripe.PaymentIntent | any) => {
     }
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+async function webHookHandler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "POST") {
         res.setHeader("Allow", "POST");
         return res.status(405).end("Method Not Allowed");
@@ -94,7 +95,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 export const config = {
     api: {
-        bodyParser: false,
+        bodyParser: true,
         externalResolver: true,
     },
 };
+export default authMiddleware(webHookHandler);

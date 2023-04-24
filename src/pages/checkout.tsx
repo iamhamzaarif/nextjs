@@ -22,10 +22,16 @@ const Checkout = (props: Props) => {
         if (!stripePromise) {
             stripePromise = loadStripe(process.env.stripe_public_key!);
         }
+        const jwt: any = session?.loggedUser;
+
         // Call the backend to create a checkout session
         const checkoutSession = await axios.post("/api/create-checkout-session", {
             items: items,
             email: session?.user.email,
+        }, {
+            headers: {
+                Authorization: `Bearer ${jwt}`, // Include the JWT token as an authorization header
+            }
         });
         const stripe = await stripePromise;
         // Redirect user/customer to Stripe Checkout

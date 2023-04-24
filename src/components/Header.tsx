@@ -33,7 +33,7 @@ const Header = (props: Props) => {
                         onClick={!session ? () => signIn() : () => signOut()}
                         className="link"
                     >
-                        <p className="font-extrabold text-black md:text-sm">{session ? `Hello, ${session.user.name}` : "Sign In"}</p>
+                        <p className="font-extrabold text-black md:text-sm">{session ? `Hello, ${session?.user?.name}` : "Sign In"}</p>
                     </div>
                     {session && <div
                         onClick={() => router.push("/orders")}

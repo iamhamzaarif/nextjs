@@ -1,5 +1,6 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {IProduct} from "@/typings";
+import authMiddleware from '../../middleware/jwtVerification';
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
@@ -9,7 +10,7 @@ if (!stripeSecretKey) {
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-export default async function checkoutHandler(
+async function checkoutHandler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
@@ -56,3 +57,5 @@ export default async function checkoutHandler(
         res.status(500).json({error: error.message || "Something went wrong"});
     }
 }
+
+export default authMiddleware(checkoutHandler);
